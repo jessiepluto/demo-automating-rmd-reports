@@ -1,0 +1,35 @@
+---
+output:
+  html_document:
+    css: extras/styles.css
+---
+  
+## Creating Tabs 
+  
+The addition of `{.tabset}` tells markdown to apply the predefined tabset class to downstream sub-headers. In this example we start with a blank level one header (`#`) above. The following level two headers (`##`) are then interpreted as tabs. 
+  
+````{verbatim, lang = "md"}
+# {.tabset} 
+
+## Creating Tabs 
+## Adding Pills
+## Using Child Docs
+## Programmatic Approach
+````
+  
+Because the output of this R Markdown document is an `.html` file, css (and html) can be used to customize any part of the report. For example, I've added some css to customize the appearance of the tabs in this example. The stylesheet is saved as `styles.css` in the `extras/` folder of this project and applied very simply in the options.
+  
+```yaml
+---
+title: "Automating Interactive R Markdown Reports"
+output:
+  html_document:
+  css: extras/styles.css
+---
+```
+  
+  
+  
+  
+  
+  

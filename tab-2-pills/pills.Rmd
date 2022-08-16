@@ -1,0 +1,63 @@
+---
+output:
+  html_document:
+    css: extras/styles.css
+---
+
+## Adding Pills {.tabset .tabset-pills}
+  
+Time to add some pills. Let's pull in the first five songs from the Jagged Little Pill album by Alanis Morissette as an example. 
+  
+```{r tracks, eval=FALSE}
+
+tracks <- spotifyr::get_artist_audio_features('alanis morissette') %>% 
+  filter(album_name == 'Jagged Little Pill') %>% 
+  select(track_name) %>% 
+  unique() %>% 
+  head(5) %>% 
+  pull()
+
+```
+  
+Creating pills works very similar to tabs. Adding `{.tabset .tabset-pills}` instead of `{.tabset}` to a header will prompt markdown to apply to default tabset-pills class to downstream headers. Here's what it looks like in this example. 
+  
+````{verbatim, lang = "md"}
+### `r paste(tracks[1])`
+The 1st track of the Jagged Little Pill album is: `r paste(tracks[1])`
+  
+### `r paste(tracks[2])`
+The 2nd track of the Jagged Little Pill album is: `r paste(tracks[2])`
+  
+### `r paste(tracks[3])`
+The 3rd track of the Jagged Little Pill album is: `r paste(tracks[3])`
+  
+### `r paste(tracks[4])`
+The 4th track of the Jagged Little Pill album is: `r paste(tracks[4])`
+  
+### `r paste(tracks[5])`
+The 5th track of the Jagged Little Pill album is: `r paste(tracks[5])`
+````
+  
+Which produces:
+  
+### `r paste(tracks[1])`
+The 1st track of the Jagged Little Pill album is: `r paste(tracks[1])`
+  
+### `r paste(tracks[2])`
+The 2nd track of the Jagged Little Pill album is: `r paste(tracks[2])`
+  
+### `r paste(tracks[3])`
+The 3rd track of the Jagged Little Pill album is: `r paste(tracks[3])`
+  
+### `r paste(tracks[4])`
+The 4th track of the Jagged Little Pill album is: `r paste(tracks[4])`
+  
+### `r paste(tracks[5])`
+The 5th track of the Jagged Little Pill album is: `r paste(tracks[5])`
+  
+  
+  
+  
+  
+
+

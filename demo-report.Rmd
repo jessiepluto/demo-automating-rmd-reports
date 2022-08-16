@@ -1,0 +1,22 @@
+---
+title: "Automating Interactive R Markdown Reports"
+output:
+  html_document:
+    css: extras/styles.css
+    includes:
+      in_header: extras/header-logo.html
+---
+
+```{r, include=FALSE, echo=FALSE}
+sys.source("extras/setup.R", envir = knitr::knit_global())
+```
+  
+This R Markdown document is a quick example of how interactive html output can be automated and organized. I'll use the spotifyr package to pull in some simple data and make quick charts as an example for creating tabs and pills, using child docs, and utilizing Markdown to generate content programmatically.  
+  
+***
+
+# {.tabset}
+
+```{r, child=c('tab-1-tabs/tabs.Rmd', 'tab-2-pills/pills.Rmd', 'tab-3-child/child.Rmd', 'tab-4-auto/auto.Rmd', 'tab-5-demo/demo.Rmd')}
+```
+

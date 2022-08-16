@@ -1,0 +1,44 @@
+---
+output: html_document
+    css: extras/styles.css
+---
+
+## Automation {.tabset .tabset-pills}
+  
+  
+For repetitive tasks `cat()` can be used with `results='asis'` to generate text that will be evaluated and knit as markdown code. For example, looking at the Jagged Little Pill album names again... 
+  
+  
+```{r tracks, eval = FALSE}
+
+tracks <- spotifyr::get_artist_audio_features('alanis morissette') %>% 
+  filter(album_name == 'Jagged Little Pill') %>% 
+  select(track_name) %>% 
+  unique() %>% 
+  head(5) %>% 
+  pull()
+
+```
+
+
+```{r auto, eval = FALSE}
+
+for (i in 1:length(tracks)) {
+  cat('\n\n### ', tracks[[i]], '\n\n')
+  print(paste0('The ', scales::ordinal(i), ' track of the Jagged Little Pill album is:', tracks[[i]]))
+}
+
+```
+
+
+Produces:
+  
+  
+```{r auto, results='asis', echo=FALSE}
+
+for (i in 1:length(tracks)) {
+  cat('\n\n### ', tracks[[i]], '\n\n')
+  cat(paste0('The ', scales::ordinal(i), ' track of the Jagged Little Pill album is: ', tracks[[i]]))
+}
+
+```

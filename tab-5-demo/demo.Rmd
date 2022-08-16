@@ -1,0 +1,134 @@
+---
+output: html_document
+    css: extras/styles.css
+---
+
+## Demo {.tabset .tabset-pills}
+
+
+### Pull in Some Data
+
+```{r df, include=TRUE}
+
+studio_albums <- c("Parachutes",
+                   "A Rush of Blood to the Head",
+                   "X&Y",
+                   "Viva La Vida or Death and All His Friends",
+                   "Mylo Xyloto",
+                   "Ghost Stories",
+                   "A Head Full of Dreams",
+                   "Everyday Life",
+                   "Music of the Spheres")
+
+df <- get_artist_audio_features('coldplay') %>% 
+  filter(album_name %in% studio_albums == TRUE) 
+
+artist_df <- df %>% 
+  mutate(level = paste0("Artist: ", artist_name),
+         year = 01) %>% 
+  group_by(level) %>% 
+  transmute_at(c("year",
+                 "tempo",
+                 "valence",
+                 "energy",
+                 "danceability",
+                 "loudness",
+                 "liveness",
+                 "instrumentalness",
+                 "acousticness",
+                 "speechiness"), 
+               mean, na.rm = TRUE) %>% 
+  ungroup() %>% 
+  unique()
+
+album_df <- df %>% 
+  mutate(level = paste0("Album: ", album_name, " (", album_release_year, ")"),
+         year = album_release_year) %>% 
+  group_by(level,year) %>% 
+  transmute_at(c("tempo",
+                 "valence",
+                 "energy",
+                 "danceability",
+                 "loudness",
+                 "liveness",
+                 "instrumentalness",
+                 "acousticness",
+                 "speechiness"), 
+               mean, na.rm = TRUE) %>% 
+  ungroup() %>% 
+  unique() 
+
+yellow_df <- df %>% 
+  filter(track_name == "Yellow") %>% 
+  mutate(level = paste0("Track: ", track_name),
+         year = 00) %>% 
+  group_by(level, year) %>% 
+  transmute_at(c("tempo",
+                 "valence",
+                 "energy",
+                 "danceability",
+                 "loudness",
+                 "liveness",
+                 "instrumentalness",
+                 "acousticness",
+                 "speechiness"), 
+               mean, na.rm = TRUE) %>% 
+  ungroup() %>% 
+  unique()
+
+df <- yellow_df %>% 
+  union(artist_df) %>% 
+  union(album_df) %>% 
+  mutate(level = fct_reorder(level, desc(as.numeric(year))))
+
+df %>% 
+  mutate(across(where(is.numeric),
+            number_format)) %>% 
+  flextable() %>% 
+  fontsize(size = 8, part = "all")
+
+```
+
+
+
+### Create a Plotting Function
+
+
+```{r plot}
+
+plotVar <- function(var_string) {
+  
+  ggplot(df, aes(x = level, y = .data[[var_string]], fill = level)) +
+    geom_bar(stat = "identity") +
+    coord_flip() +
+    ggtitle(var_string) +
+    ggthemes::theme_fivethirtyeight(base_size = 10) +
+    theme(panel.background = element_rect(fill = "white")) +
+    theme(plot.background = element_rect(fill = "white")) +
+    theme(legend.position="none")  
+}
+
+
+features <- colnames(df)[!colnames(df) %in% c("level","year")]
+
+pp <- features %>% 
+  map(~ plotVar(.x))
+
+
+```
+
+### Knit Automated Plots {.tabset .tabset-pills}
+
+With the chunk option `results = 'asis'`, you can
+write out text as raw Markdown content, which can
+also be mixed with plots.
+
+
+```{r plots, results='asis'}
+
+for (i in 1:length(features)) {
+  cat('\n\n#### ', features[[i]], '  \n\n')
+   print(pp[[i]])
+}
+
+```

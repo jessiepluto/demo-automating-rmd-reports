@@ -1,0 +1,65 @@
+/*!
+  css to customze a few elements 
+*/
+
+
+/*  Adding some space before and after headers  */
+h1, .h1, h2, .h2, h3, .h3 {
+    margin-top: 45px;
+    margin-bottom: 20px;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #000;
+    margin-bottom: 20px;
+}
+
+/*  Change Style for Active Tabs  */
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+     background-color: #fff; 
+     border: 1px solid #000;
+     border-top: 3px solid #000;
+     border-bottom-color: transparent;
+     opacity: 1;
+     color: #000; 
+     font-weight: 400;
+     }
+ 
+ /*  Change Style for Inactive Tabs  */  
+.nav-tabs>li>a, .nav-tabs>li>a:focus, .nav-tabs>li>a:hover {
+      background-color: #fff; 
+      border-color: transparent; 
+      opacity: 0.5;
+      color: #000; 
+      font-weight: 400;
+      text-decoration: none;
+    }
+
+/*  Change Style for Active Pills  */
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+     background-color: #2ecc71; 
+     border-color: #ffffff; 
+     border-radius: 5px;
+     color: #ffffff;
+     font-weight: 500;
+     }
+     
+/*  Change Style for Inactive Pills  */  
+.nav-pills>li>a {
+      background-color: #ffffff;
+      border-color: #ffffff; 
+      border-radius: 5px;
+      color: #2ecc71; 
+      font-weight: 400;
+    }
+    
+ /*  Change Style for Hover on Inactive Pills  */     
+.nav-pills>li>a:focus, .nav-pills>li>a:hover {
+  background-color: #eeeeee;
+  border-color: #ffffff; 
+  border-radius: 5px;
+  color: #2ecc71; 
+  font-weight: 400;
+}
+
+
